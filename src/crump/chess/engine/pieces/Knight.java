@@ -53,21 +53,21 @@ public class Knight extends Piece {
         return Collections.unmodifiableList(legalMoves);
     }
 
-    private static boolean isFirstColumnExclustion(final int currentPostion, final int candadateOffset) {
-        return BoardUtils.FIRST_COLUMN[currentPostion] && (candadateOffset == -17 || candadateOffset == -10 ||
-                candadateOffset == 6 || candadateOffset == 15);
+    private static boolean isFirstColumnExclustion(final int currentPosition, final int candidateOffset) {
+        return BoardUtils.FIRST_COLUMN[currentPosition] && (candidateOffset == -17 || candidateOffset == -10 ||
+                candidateOffset == 6 || candidateOffset == 15);
     }
 
-    private static boolean isSecondColumnExclustion(final int currentPostion, final int candadateOffset) {
-        return BoardUtils.SECOND_COLUMN[currentPostion] && (candadateOffset == -10 || candadateOffset == 6);
+    private static boolean isSecondColumnExclustion(final int currentPosition, final int candidateOffset) {
+        return BoardUtils.SECOND_COLUMN[currentPosition] && (candidateOffset == -10 || candidateOffset == 6);
     }
 
-    private static boolean isSeventhColumnExclustion(final int currentPostion, final int candadateOffset) {
-        return BoardUtils.SEVENTH_COLUMN[currentPostion] && (candadateOffset == 10 || candadateOffset == -6);
+    private static boolean isSeventhColumnExclustion(final int currentPosition, final int candidateOffset) {
+        return BoardUtils.SEVENTH_COLUMN[currentPosition] && (candidateOffset == 10 || candidateOffset == -6);
     }
 
-    private static boolean isEighthColumnExclustion(final int currentPostion, final int candadateOffset) {
-        return BoardUtils.EIGHTH_COLUMN[currentPostion] && (candadateOffset == -15 || candadateOffset == -6 ||
-                candadateOffset == 10 || candadateOffset == 17);
+    private static boolean isEighthColumnExclustion(final int currentPortion, final int candidateOffset) {
+        return BoardUtils.EIGHTH_COLUMN[currentPortion] && (candidateOffset == -15 || candidateOffset == -6 ||
+                candidateOffset == 10 || candidateOffset == 17);
     }
 }
