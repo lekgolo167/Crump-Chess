@@ -13,7 +13,7 @@ public class Knight extends Piece {
 
     private final static int[] CANDIDATE_MOVE_COORDINATES = { -17, -15, -10, -6, 6, 10, 15, 17};
 
-    Knight(final int piecePosition, final Alliance pieceAlliance) {
+    public Knight(final int piecePosition, final Alliance pieceAlliance) {
         super(piecePosition, pieceAlliance);
     }
 
@@ -22,16 +22,16 @@ public class Knight extends Piece {
 
         final List<Move> legalMoves = new ArrayList<>();
 
-        for(final int currentCandidate : CANDIDATE_MOVE_COORDINATES) {
+        for(final int currentCandidateOffset : CANDIDATE_MOVE_COORDINATES) {
 
-            final int candidateDestinationCoordinate = this.piecePosition + currentCandidate;
+            final int candidateDestinationCoordinate = this.piecePosition + currentCandidateOffset;
 
             if (BoardUtils.isValidCoordinate(candidateDestinationCoordinate)) {
 
-                if (isFirstColumnExclustion(this.piecePosition, currentCandidate) ||
-                        isSecondColumnExclustion(this.piecePosition, currentCandidate) ||
-                        isSeventhColumnExclustion(this.piecePosition, currentCandidate) ||
-                        isEighthColumnExclustion(this.piecePosition, currentCandidate)) {
+                if (isFirstColumnExclustion(this.piecePosition, currentCandidateOffset) ||
+                        isSecondColumnExclustion(this.piecePosition, currentCandidateOffset) ||
+                        isSeventhColumnExclustion(this.piecePosition, currentCandidateOffset) ||
+                        isEighthColumnExclustion(this.piecePosition, currentCandidateOffset)) {
                     continue;
                 }
                 final Tile candidateDestinationTile = board.getTile(candidateDestinationCoordinate);
@@ -69,5 +69,10 @@ public class Knight extends Piece {
     private static boolean isEighthColumnExclustion(final int currentPortion, final int candidateOffset) {
         return BoardUtils.EIGHTH_COLUMN[currentPortion] && (candidateOffset == -15 || candidateOffset == -6 ||
                 candidateOffset == 10 || candidateOffset == 17);
+    }
+
+    @Override
+    public String toString() {
+        return PieceType.KNIGHT.toString();
     }
 }

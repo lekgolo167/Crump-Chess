@@ -16,7 +16,7 @@ public class Queen extends Piece {
 
     private final static int[] CANDIDATE_MOVE_VECTOR_COORDINATES = { -9, -8, -7, -1, 1,  7, 8, 9};
 
-    Queen(int piecePosition, Alliance pieceAlliance) {
+    public Queen(int piecePosition, Alliance pieceAlliance) {
         super(piecePosition, pieceAlliance);
     }
 
@@ -25,17 +25,17 @@ public class Queen extends Piece {
 
         final List<Move> legalMoves = new ArrayList<>();
 
-        for(final int candidateCoordinateOffset: CANDIDATE_MOVE_VECTOR_COORDINATES) {
+        for(final int currentCandidateOffset: CANDIDATE_MOVE_VECTOR_COORDINATES) {
 
             int candidateDestinationCoordinate = this.piecePosition;
 
             while(BoardUtils.isValidCoordinate(candidateDestinationCoordinate)) {
 
-                if (isFirstColumnExclustion(candidateDestinationCoordinate, candidateCoordinateOffset) ||
-                        isEighthColumnExclustion(candidateDestinationCoordinate, candidateCoordinateOffset)) {
+                if (isFirstColumnExclustion(candidateDestinationCoordinate, currentCandidateOffset) ||
+                        isEighthColumnExclustion(candidateDestinationCoordinate, currentCandidateOffset)) {
                     break;
                 }
-                candidateDestinationCoordinate += candidateCoordinateOffset;
+                candidateDestinationCoordinate += currentCandidateOffset;
 
                 if (BoardUtils.isValidCoordinate(candidateDestinationCoordinate)) {
                     final Tile candidateDestinationTile = board.getTile(candidateDestinationCoordinate);
@@ -65,5 +65,10 @@ public class Queen extends Piece {
 
     private static boolean isEighthColumnExclustion(final int currentPosition, final int candidateOffset) {
         return BoardUtils.EIGHTH_COLUMN[currentPosition] && (candidateOffset == -7 || candidateOffset == 9 || candidateOffset == 1);
+    }
+
+    @Override
+    public String toString() {
+        return PieceType.QUEEN.toString();
     }
 }
