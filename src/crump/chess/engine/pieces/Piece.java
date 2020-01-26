@@ -9,16 +9,21 @@ import java.util.List;
 
 public abstract class Piece {
 
+    protected  final PieceType pieceType;
     protected final int piecePosition;
     protected final Alliance pieceAlliance;
     protected final boolean isFirstMove;
 
-    Piece(final int piecePosition, final Alliance pieceAlliance) {
+    Piece(final PieceType pieceType, int piecePosition, final Alliance pieceAlliance) {
+        this.pieceType = pieceType;
         this.pieceAlliance = pieceAlliance;
         this.piecePosition = piecePosition;
         this.isFirstMove = true;
     }
 
+    public PieceType getPieceType() {
+        return  this.pieceType;
+    }
     public int getPiecePosition() {
         return piecePosition;
     }
