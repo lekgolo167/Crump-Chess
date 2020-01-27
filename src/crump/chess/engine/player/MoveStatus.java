@@ -1,11 +1,7 @@
 package crump.chess.engine.player;
 
 public enum MoveStatus {
-    DONE {
-        @Override
-        boolean isDone() {
-            return true;
-        }
-    };
-    abstract boolean isDone();
+    DONE,
+    ILLEGAL_MOVE,
+    LEAVES_PLAYER_IN_CHECK;
 }

@@ -16,7 +16,7 @@ public class Pawn extends Piece{
 
     private final static int[] CANDIDATE_MOVE_COORDINATES = { 7, 8, 9, 16 };
 
-    public Pawn(int piecePosition, Alliance pieceAlliance) {
+    public Pawn(final int piecePosition, final Alliance pieceAlliance) {
         super(PieceType.PAWN, piecePosition, pieceAlliance);
     }
 
@@ -74,6 +74,11 @@ public class Pawn extends Piece{
             }
         }
         return Collections.unmodifiableList(legalMoves);
+    }
+
+    @Override
+    public Pawn movePiece(Move move) {
+        return new Pawn(move.getDestinationCoordinate(), move.getMovedPiece().pieceAlliance);
     }
 
     @Override
