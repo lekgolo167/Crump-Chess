@@ -12,6 +12,8 @@ public abstract class Move {
     protected final int destinationCoordinate;
     protected final boolean isFirstMove;
 
+    public static final Move NULL_MOVE = new NullMove();
+
     private Move(final Board board, final Piece movedPiece, final int destinationCoordinate) {
         this.board = board;
         this.movedPiece = movedPiece;
@@ -24,6 +26,11 @@ public abstract class Move {
         this.movedPiece = null;
         this.destinationCoordinate = destinationCoordinate;
         this.isFirstMove = false;
+    }
+
+    @Override
+    public String toString() {
+        return BoardUtils.getPositionAtCoordinate(this.destinationCoordinate);
     }
 
     @Override
@@ -135,11 +142,6 @@ public abstract class Move {
         }
 
         @Override
-        public Board execute() {
-            return null;
-        }
-
-        @Override
         public boolean isAttack() {
             return true;
         }
@@ -153,7 +155,7 @@ public abstract class Move {
     public static final class NullMove extends Move {
 
         public NullMove() {
-            super(null, null, -1);
+            super(null, -1);
         }
 
         @Override
@@ -173,7 +175,7 @@ public abstract class Move {
                     return move;
                 }
             }
-            return null;
+            return NULL_MOVE;
         }
     }
     /////////////////////////////////////////////////
@@ -184,6 +186,7 @@ public abstract class Move {
         public PawnMove(final Board board, final Piece movedPiece, final int destinationCoordinate) {
             super(board, movedPiece, destinationCoordinate);
         }
+
     }
 
     public static final class PawnJump extends Move {
@@ -213,6 +216,8 @@ public abstract class Move {
 
             return builder.build();
         }
+
+
     }
 
     public static class PawnAttackMove extends AttackMove {

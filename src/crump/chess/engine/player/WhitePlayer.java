@@ -25,12 +25,17 @@ public class WhitePlayer extends Player {
 
     @Override
     public Alliance getAlliance() {
-        return Alliance.BLACK;
+        return Alliance.WHITE;
     }
 
     @Override
     public Player getOpponent() {
         return this.board.blackPlayer();
+    }
+
+    @Override
+    public String toString() {
+        return "White";
     }
 
     @Override

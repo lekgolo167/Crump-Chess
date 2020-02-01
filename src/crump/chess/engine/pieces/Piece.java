@@ -69,24 +69,34 @@ public abstract class Piece {
 
     public abstract Piece movePiece(Move move);
 
+    public int getPieceValue() {
+        return this.pieceType.getPieceValue();
+    }
+
     public enum PieceType {
 
-        PAWN("P"),
-        KNIGHT("N"),
-        BISHOP("B"),
-        ROOK("R"),
-        QUEEN("Q"),
-        KING("k");
+        PAWN("P", 10),
+        KNIGHT("N", 30),
+        BISHOP("B", 30),
+        ROOK("R", 50),
+        QUEEN("Q", 90),
+        KING("k", 1000);
 
         private String pieceName;
+        private int pieceValue;
 
-        PieceType(final String pieceName) {
+        PieceType(final String pieceName, int value) {
             this.pieceName = pieceName;
+            this.pieceValue = value;
         }
 
         @Override
         public String toString() {
             return this.pieceName;
+        }
+
+        public int getPieceValue() {
+            return this.pieceValue;
         }
     }
 }
