@@ -32,7 +32,7 @@ public class King extends Piece {
         for(final int currentCandidateOffset: CANDIDATE_MOVE_VECTOR_COORDINATES) {
             final int candidateDestinationCoordinate = this.piecePosition + currentCandidateOffset;
             if(isFirstColumnExclustion(this.piecePosition, currentCandidateOffset) ||
-               isEighthColumnExclustion(this.piecePosition, currentCandidateOffset)) {
+                    isEighthColumnExclustion(this.piecePosition, currentCandidateOffset)) {
                 continue;
             }
             if(BoardUtils.isValidCoordinate(candidateDestinationCoordinate)) {
@@ -45,7 +45,7 @@ public class King extends Piece {
                     final Alliance pieceAlliance = pieceAtDestination.getPieceAlliance();
 
                     if(this.pieceAlliance != pieceAlliance) {
-                        legalMoves.add(new Move.AttackMove(board, this, candidateDestinationCoordinate, pieceAtDestination));
+                        legalMoves.add(new Move.MajorAttackMove(board, this, candidateDestinationCoordinate, pieceAtDestination));
                     }
                 }
             }

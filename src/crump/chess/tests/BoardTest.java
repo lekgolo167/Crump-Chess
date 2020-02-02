@@ -13,8 +13,8 @@ public class BoardTest {
     public void initialBoard() {
 
         final Board board = Board.createStandardBoard();
-        assertEquals(board.currentPlayer().getLegalMoves().size(), 20);
-        assertEquals(board.currentPlayer().getOpponent().getLegalMoves().size(), 20);
+        assertEquals(20, board.currentPlayer().getLegalMoves().size());
+        assertEquals(20, board.currentPlayer().getOpponent().getLegalMoves().size());
         assertFalse(board.currentPlayer().isInCheck());
         assertFalse(board.currentPlayer().isInCheckMate());
         assertFalse(board.currentPlayer().isCastled());
