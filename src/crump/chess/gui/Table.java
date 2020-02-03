@@ -477,7 +477,14 @@ public class Table extends Observable {
 
         private Collection<Move> pieceLegalMoves(final Board board) {
             if(humanMovedPiece != null && humanMovedPiece.getPieceAlliance() == board.currentPlayer().getAlliance()) {
-                return humanMovedPiece.calculateLegalMoves(board);
+                List<Move> pieceMoves = new ArrayList<>();
+                for(Move move : board.currentPlayer().getLegalMoves()) {
+                    if(move.getMovedPiece() == humanMovedPiece) {
+                        pieceMoves.add(move);
+                    }
+                }
+                return pieceMoves;
+                //return humanMovedPiece.calculateLegalMoves(board);
             }
             return Collections.emptyList();
         }

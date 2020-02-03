@@ -21,7 +21,7 @@ public class King extends Piece {
     }
 
     public King(final int piecePosition, final Alliance pieceAlliance, final boolean isFirstMove) {
-        super(PieceType.ROOK, piecePosition, pieceAlliance, isFirstMove);
+        super(PieceType.KING, piecePosition, pieceAlliance, isFirstMove);
     }
 
     @Override
@@ -49,7 +49,6 @@ public class King extends Piece {
                     }
                 }
             }
-
         }
 
         return Collections.unmodifiableCollection(legalMoves);
@@ -57,7 +56,7 @@ public class King extends Piece {
 
     @Override
     public King movePiece(Move move) {
-        return new King(move.getDestinationCoordinate(), move.getMovedPiece().pieceAlliance);
+        return new King(move.getDestinationCoordinate(), move.getMovedPiece().pieceAlliance, false);
     }
 
     private static boolean isFirstColumnExclustion(final int currentPosition, final int candidateOffset) {

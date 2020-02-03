@@ -38,8 +38,8 @@ public class BlackPlayer extends Player {
         return "Black";
     }
 
-        @Override
-    protected Collection<Move> calculateKingCastles(final Collection<Move> playerLegals, final Collection<Move> opponentsLegals) {
+    @Override
+    public Collection<Move> calculateKingCastles(final Collection<Move> playerLegals, final Collection<Move> opponentsLegals) {
         final List<Move> kingCastles = new ArrayList<>();
 
         if(this.playerKing.isFirstMove() && !this.isInCheck()) {

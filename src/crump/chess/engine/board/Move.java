@@ -403,7 +403,7 @@ public abstract class Move {
             }
             builder.setPiece(this.movedPiece.movePiece(this));
             //TODO add firstmove bool for normal pieces
-            builder.setPiece(new Rook(this.castleRookDestination, this.castleRook.getPieceAlliance()));
+            builder.setPiece(new Rook(this.castleRookDestination, this.castleRook.getPieceAlliance(), false));
             builder.setMoveMaker(this.board.currentPlayer().getOpponent().getAlliance());
             return builder.build();
         }
