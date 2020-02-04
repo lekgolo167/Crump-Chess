@@ -239,7 +239,7 @@ public class Table extends Observable {
         @Override
         protected Move doInBackground() throws Exception {
 
-            final MoveStrategy minMax = new MinMax(4);
+            final MoveStrategy minMax = new MinMax(5);
 
             final Move bestMove = minMax.execute(Table.get().getGameBoard());
 
@@ -484,7 +484,6 @@ public class Table extends Observable {
                     }
                 }
                 return pieceMoves;
-                //return humanMovedPiece.calculateLegalMoves(board);
             }
             return Collections.emptyList();
         }
