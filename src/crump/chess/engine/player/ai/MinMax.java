@@ -71,6 +71,7 @@ public class MinMax implements MoveStrategy {
                 index++;
             }
         }
+        numMoves = index;
         index = -1;
         int currentValue = -1;
         while(++index < numMoves) {
