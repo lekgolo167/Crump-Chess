@@ -6,6 +6,8 @@ import crump.chess.engine.player.MoveStatus;
 import crump.chess.engine.player.MoveTransition;
 
 import java.lang.Math;
+import java.util.*;
+import java.util.concurrent.TimeUnit;
 
 public class MinMax implements MoveStrategy {
 
@@ -24,32 +26,70 @@ public class MinMax implements MoveStrategy {
         return "MiniMax";
     }
 
+    private class Threader extends Thread {
+
+        protected int bestScore;
+        protected Move bestMove;
+        protected int searchDepth;
+        protected Board board;
+        protected MoveTransition moveTransition;
+
+        public Threader(Board board, MoveTransition moveTransition, int searchDepth, Move move) {
+            this.bestScore = 0;
+            this.bestMove = move;
+            this.searchDepth = searchDepth;
+            this.board = board;
+            this.moveTransition = moveTransition;
+        }
+
+        @Override
+        public void run() {
+            this.bestScore = this.board.currentPlayer().getAlliance().isWhite() ?
+                    min(this.moveTransition.getTransitionBoard(), Integer.MIN_VALUE, Integer.MAX_VALUE, this.searchDepth - 1) :
+                    max(this.moveTransition.getTransitionBoard(), Integer.MIN_VALUE, Integer.MAX_VALUE, this.searchDepth - 1);
+        }
+    }
+
     @Override
     public Move execute(Board board) {
         final long startTime = System.currentTimeMillis();
         Move bestMove = null;
         int highestSeenValue = Integer.MIN_VALUE;
         int lowestSeenValue = Integer.MAX_VALUE;
-        int currentValue;
 
         int numMoves = board.currentPlayer().getLegalMoves().size();
+
+        Threader [] ts = new Threader[numMoves];
+
         System.out.println(board.currentPlayer() + "Thinking with depth = " + this.searchDepth + ", current moves size " + numMoves);
-
-
-
+        int index = 0;
         for(final Move move : board.currentPlayer().getLegalMoves()) {
             final MoveTransition moveTransition = board.currentPlayer().makeMove(move);
             if(moveTransition.getMoveStatus() == MoveStatus.DONE) {
-                currentValue = board.currentPlayer().getAlliance().isWhite() ?
-                        min(moveTransition.getTransitionBoard(), Integer.MIN_VALUE, Integer.MAX_VALUE, this.searchDepth - 1) :
-                        max(moveTransition.getTransitionBoard(), Integer.MIN_VALUE, Integer.MAX_VALUE, this.searchDepth - 1);
-                if(board.currentPlayer().getAlliance().isWhite() && currentValue >= highestSeenValue) {
-                    highestSeenValue = currentValue;
-                    bestMove = move;
-                } else if(board.currentPlayer().getAlliance().isBlack() && currentValue <= lowestSeenValue) {
-                    lowestSeenValue = currentValue;
-                    bestMove = move;
-                }
+                ts[index] = new Threader(board, moveTransition, searchDepth, move);
+                ts[index].start();
+                index++;
+            }
+        }
+        index = -1;
+        int currentValue = -1;
+        while(++index < numMoves) {
+            try {
+                ts[index].join();
+                currentValue = ts[index].bestScore;
+            }catch (Exception e) {
+                System.out.printf("failed");
+                System.out.println(Arrays.toString(ts));
+                continue;
+            }
+
+            System.out.println("Thread Done! " + index);
+            if(board.currentPlayer().getAlliance().isWhite() && currentValue >= highestSeenValue) {
+                highestSeenValue = currentValue;
+                bestMove = ts[index].bestMove;
+            } else if(board.currentPlayer().getAlliance().isBlack() && currentValue <= lowestSeenValue) {
+                lowestSeenValue = currentValue;
+                bestMove = ts[index].bestMove;
             }
         }
 
@@ -106,4 +146,7 @@ public class MinMax implements MoveStrategy {
     private static boolean isEndGameScenario(final Board board) {
         return board.currentPlayer().isInCheckMate() || board.currentPlayer().isInStaleMate();
     }
+
+
 }
+
